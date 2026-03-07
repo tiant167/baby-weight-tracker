@@ -155,7 +155,7 @@ export const GrowthChart: React.FC<GrowthChartProps> = ({ entries, profile }) =>
             <defs>
               <linearGradient id="colorWho" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="var(--chart-who-line)" stopOpacity={0.3}/>
-                <stop offset="95%" stopColor="var(--chart-who-line)" stopOpacity={0.05}/>
+                <stop offset="95%" stopColor="var(--chart-who-line)" stopOpacity={0.15}/>
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--input-border)" />
