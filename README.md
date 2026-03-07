@@ -1,12 +1,15 @@
 # Baby Growth Tracker PWA 👶📈
 
+![App Screenshot](./screenshot.png)
+
 A modern, responsive, privacy-focused Progressive Web Application (PWA) to track your baby's weight, height, and head circumference, and visualize their growth against the official World Health Organization (WHO) child growth standards (0-24 months).
 
 ## Features
 
 - **Comprehensive Tracking**: Log Weight (kg), Length/Height (cm), and Head Circumference (cm).
+- **Interactive History**: View all past records in a clean list with full inline editing support. Update metrics or change dates on the fly.
 - **Privacy First (Local Storage)**: All data including baby profile and records are stored completely locally on your device using `localStorage`. No data is ever sent to a server.
-- **Progressive Web App (PWA)**: Designed to be installable on your mobile device. You can "Add to Home Screen" to use it just like a native app, complete with offline support via Service Workers.
+- **Progressive Web App (PWA)**: Designed to be installable on your mobile device. You can "Add to Home Screen" to use it just like a native app. Includes a smart update prompt so you instantly get the latest features when a new version is released.
 - **WHO Growth Curves Integration**: Automatically plots your baby's metrics over the official WHO percentiles reference curves (3rd, 15th, 50th, 85th, and 97th percentiles) for boys and girls. Tab between metrics to instantly compare their development.
 - **Premium UI & UX**: Hand-crafted UI with pure Vanilla CSS featuring glassmorphism elements, soft gradients, responsive design, and smooth micro-animations. Support for both light and dark system preferences.
 - **Interactive Charts**: Powered by Recharts for a dynamic, hoverable overview of the growth trajectory across all three key metrics.
