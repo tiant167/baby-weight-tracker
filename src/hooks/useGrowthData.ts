@@ -102,17 +102,38 @@ export function useGrowthData() {
   };
 
   const exportData = () => {
-    const data = {
-      profile,
-      entries,
-      exportDate: new Date().toISOString()
-    };
+    // 1. Create CSV Header rows (Profile info)
+    const profileRows = [
+      ['Baby Profile'],
+      ['Name', profile?.name || 'Unknown'],
+      ['Birth Date', profile?.birthDate || 'Unknown'],
+      ['Gender', profile?.gender || 'Unknown'],
+      [''], // empty row separator
+    ];
+
+    // 2. Create Entries Data rows
+    const dataHeaders = ['Date', 'Weight (kg)', 'Height (cm)', 'Head Circumference (cm)'];
+    const dataRows = entries.map(entry => [
+      entry.date,
+      entry.weightInKg !== undefined ? entry.weightInKg.toString() : '',
+      entry.heightInCm !== undefined ? entry.heightInCm.toString() : '',
+      entry.headCirInCm !== undefined ? entry.headCirInCm.toString() : ''
+    ]);
+
+    // 3. Combine and join with commas and newlines
+    const csvContent = [
+      ...profileRows.map(row => row.join(',')),
+      dataHeaders.join(','),
+      ...dataRows.map(row => row.join(','))
+    ].join('\n');
     
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    // Add BOM for Excel UTF-8 recognition
+    const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+    const blob = new Blob([bom, csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `baby-growth-backup-${new Date().toISOString().split('T')[0]}.json`;
+    a.download = `baby-growth-backup-${new Date().toISOString().split('T')[0]}.csv`;
     document.body.appendChild(a);
     a.click();
     
