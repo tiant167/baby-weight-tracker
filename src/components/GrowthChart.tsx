@@ -40,6 +40,7 @@ export const GrowthChart: React.FC<GrowthChartProps> = ({ entries, profile }) =>
         p3: who.p3,
         p50: who.p50,
         p97: who.p97,
+        whoRange: [who.p3, who.p97],
         userValue: null as number | null
       };
     });
@@ -154,8 +155,8 @@ export const GrowthChart: React.FC<GrowthChartProps> = ({ entries, profile }) =>
           >
             <defs>
               <linearGradient id="colorWho" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="var(--chart-who-line)" stopOpacity={0.3}/>
-                <stop offset="95%" stopColor="var(--chart-who-line)" stopOpacity={0.15}/>
+                <stop offset="0%" stopColor="var(--chart-who-line)" stopOpacity={0.4}/>
+                <stop offset="100%" stopColor="var(--chart-who-line)" stopOpacity={0.1}/>
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--input-border)" />
@@ -175,8 +176,7 @@ export const GrowthChart: React.FC<GrowthChartProps> = ({ entries, profile }) =>
             />
             <Tooltip content={<CustomTooltip />} />
             
-            <Area type="monotone" dataKey="p97" stroke="none" fill="url(#colorWho)" isAnimationActive={false} />
-            <Area type="monotone" dataKey="p3" stroke="none" fill="var(--bg-color)" isAnimationActive={false} />
+            <Area type="monotone" dataKey="whoRange" stroke="none" fill="url(#colorWho)" isAnimationActive={false} />
             <Area type="monotone" dataKey="p50" stroke="var(--chart-who-line)" strokeWidth={2} strokeDasharray="5 5" fill="none" isAnimationActive={false} />
             
             {entries.length > 0 && (
