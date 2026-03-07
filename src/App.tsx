@@ -4,6 +4,7 @@ import { Header } from './components/Header';
 import { GrowthEntryForm } from './components/GrowthEntryForm';
 import { GrowthHistoryList } from './components/GrowthHistoryList';
 import { GrowthChart } from './components/GrowthChart';
+import { ReloadPrompt } from './components/ReloadPrompt';
 
 function App() {
   const { entries, addEntry, updateEntry, deleteEntry, profile, updateProfile } = useGrowthData();
@@ -99,6 +100,9 @@ function App() {
           </div>
         </div>
       )}
+
+      {/* PWA Update Prompt */}
+      <ReloadPrompt />
     </div>
   );
 }
