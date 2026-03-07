@@ -1,73 +1,63 @@
-# React + TypeScript + Vite
+# Baby Weight Tracker PWA 👶📉
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive, privacy-focused Progressive Web Application (PWA) to track your baby's weight and visualize their growth against the official World Health Organization (WHO) child growth standards (0-24 months).
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Privacy First (Local Storage)**: All data including baby profile and weight records are stored completely locally on your device using `localStorage`. No data is ever sent to a server.
+- **Progressive Web App (PWA)**: Designed to be installable on your mobile device. You can "Add to Home Screen" to use it just like a native app, complete with offline support via Service Workers.
+- **WHO Growth Curves Integration**: Automatically plots your baby's weight over the official WHO weight-for-age percentiles reference curves (3rd, 15th, 50th, 85th, and 97th percentiles) for boys and girls.
+- **Premium UI & UX**: Hand-crafted UI with pure Vanilla CSS featuring glassmorphism elements, soft gradients, responsive design, and smooth micro-animations. Support for both light and dark system preferences.
+- **Interactive Charts**: Powered by Recharts for a dynamic, hoverable overview of the growth trajectory.
 
-## React Compiler
+## Technology Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 18** & **Vite**
+- **TypeScript** for robust type safety
+- **Vanilla CSS** with modern CSS Variables design system
+- **Recharts** for visualizing the growth curve
+- **Lucide React** for beautiful, consistent iconography
+- **vite-plugin-pwa** for generating the Service Worker and Web Manifest
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Node.js (v18 or higher recommended)
+- npm
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Installation & Running Locally
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. Clone the repository:
+   ```bash
+   git clone git@github.com:tiant167/baby-weight-tracker.git
+   cd baby-weight-tracker
+   ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+3. Start the Vite development server:
+   ```bash
+   npm run dev
+   ```
+   Open `http://localhost:5173/` in your browser.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Deployment
+
+Because this app operates entirely on the client-side (no backend required), it's completely straightforward to deploy to modern static hosting services like Vercel, Netlify, or GitHub Pages. 
+
+### Deploying to Vercel
+
+1. Push your code to your GitHub repository.
+2. Go to your [Vercel Dashboard](https://vercel.com/dashboard).
+3. Click **Add New... > Project**.
+4. Import your `baby-weight-tracker` repository.
+5. Vercel will automatically detect Vite. The default build settings (`npm run build` as Build Command and `dist` as Output Directory) are correct.
+6. Click **Deploy**.
+
+## License
+
+MIT License
