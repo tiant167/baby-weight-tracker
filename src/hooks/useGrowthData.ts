@@ -81,6 +81,18 @@ export function useGrowthData() {
     });
   };
 
+  const updateEntry = (id: string, updates: Partial<GrowthEntry>) => {
+    setEntries(prev => {
+      const existingIndex = prev.findIndex(e => e.id === id);
+      if (existingIndex < 0) return prev;
+
+      const updated = [...prev];
+      updated[existingIndex] = { ...updated[existingIndex], ...updates };
+      // Sort in case the date was updated
+      return updated.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    });
+  };
+
   const deleteEntry = (id: string) => {
     setEntries(prev => prev.filter(e => e.id !== id));
   };
@@ -92,6 +104,7 @@ export function useGrowthData() {
   return {
     entries,
     addEntry,
+    updateEntry,
     deleteEntry,
     profile,
     updateProfile
