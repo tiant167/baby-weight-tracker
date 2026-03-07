@@ -1,13 +1,13 @@
 import React from 'react';
 import { Trash2 } from 'lucide-react';
-import type { WeightEntry } from '../hooks/useWeightData';
+import type { GrowthEntry } from '../hooks/useGrowthData';
 
-interface WeightHistoryListProps {
-  entries: WeightEntry[];
+interface GrowthHistoryListProps {
+  entries: GrowthEntry[];
   onDeleteEntry: (id: string) => void;
 }
 
-export const WeightHistoryList: React.FC<WeightHistoryListProps> = ({ entries, onDeleteEntry }) => {
+export const GrowthHistoryList: React.FC<GrowthHistoryListProps> = ({ entries, onDeleteEntry }) => {
   // Sort descending for display
   const sortedEntries = [...entries].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
@@ -37,9 +37,19 @@ export const WeightHistoryList: React.FC<WeightHistoryListProps> = ({ entries, o
               onMouseEnter={(e) => e.currentTarget.style.transform = 'translateX(4px)'}
               onMouseLeave={(e) => e.currentTarget.style.transform = 'translateX(0)'}
             >
-              <div>
-                <div style={{ fontWeight: 600, fontSize: '1.125rem' }}>{entry.weightInKg} kg</div>
-                <div style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>{entry.date}</div>
+              <div style={{ flex: 1 }}>
+                <div style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginBottom: '4px' }}>{entry.date}</div>
+                <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                  {entry.weightInKg !== undefined && (
+                    <div style={{ fontWeight: 600, fontSize: '1rem' }}>⚖️ {entry.weightInKg} kg</div>
+                  )}
+                  {entry.heightInCm !== undefined && (
+                    <div style={{ fontWeight: 600, fontSize: '1rem' }}>📏 {entry.heightInCm} cm</div>
+                  )}
+                  {entry.headCirInCm !== undefined && (
+                    <div style={{ fontWeight: 600, fontSize: '1rem' }}>🧠 {entry.headCirInCm} cm</div>
+                  )}
+                </div>
               </div>
               <button 
                 className="btn-icon" 

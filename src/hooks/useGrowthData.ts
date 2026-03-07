@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 
-export interface WeightEntry {
+export interface GrowthEntry {
   id: string;
   date: string; // ISO string format YYYY-MM-DD
-  weightInKg: number;
+  weightInKg?: number;
+  heightInCm?: number;
+  headCirInCm?: number;
 }
 
 const STORAGE_KEY = 'baby_weight_records';
@@ -15,8 +17,8 @@ export interface BabyProfile {
   gender: 'boy' | 'girl';
 }
 
-export function useWeightData() {
-  const [entries, setEntries] = useState<WeightEntry[]>(() => {
+export function useGrowthData() {
+  const [entries, setEntries] = useState<GrowthEntry[]>(() => {
     if (typeof window === 'undefined') return [];
     try {
       const item = window.localStorage.getItem(STORAGE_KEY);
@@ -48,22 +50,32 @@ export function useWeightData() {
     }
   }, [profile]);
 
-  const addEntry = (date: string, weightInKg: number) => {
+  const addEntry = (date: string, weightInKg?: number, heightInCm?: number, headCirInCm?: number) => {
     setEntries(prev => {
       // Check if entry for date already exists and replace it, or add new
       const existingIndex = prev.findIndex(e => e.date === date);
-      const newEntry: WeightEntry = {
-        id: crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(),
-        date,
-        weightInKg,
-      };
-
+      
       if (existingIndex >= 0) {
         const updated = [...prev];
-        updated[existingIndex] = newEntry;
+        const existingEntry = updated[existingIndex];
+        
+        updated[existingIndex] = {
+          ...existingEntry,
+          weightInKg: weightInKg !== undefined ? weightInKg : existingEntry.weightInKg,
+          heightInCm: heightInCm !== undefined ? heightInCm : existingEntry.heightInCm,
+          headCirInCm: headCirInCm !== undefined ? headCirInCm : existingEntry.headCirInCm,
+        };
         // Sort by date ascending
         return updated.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
       }
+
+      const newEntry: GrowthEntry = {
+        id: crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(),
+        date,
+        weightInKg,
+        heightInCm,
+        headCirInCm
+      };
 
       return [...prev, newEntry].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
     });

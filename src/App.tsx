@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { useWeightData } from './hooks/useWeightData';
+import { useGrowthData } from './hooks/useGrowthData';
 import { Header } from './components/Header';
-import { WeightEntryForm } from './components/WeightEntryForm';
-import { WeightHistoryList } from './components/WeightHistoryList';
+import { GrowthEntryForm } from './components/GrowthEntryForm';
+import { GrowthHistoryList } from './components/GrowthHistoryList';
 import { GrowthChart } from './components/GrowthChart';
 
 function App() {
-  const { entries, addEntry, deleteEntry, profile, updateProfile } = useWeightData();
+  const { entries, addEntry, deleteEntry, profile, updateProfile } = useGrowthData();
   
   // Profile Form state
   const [profileName, setProfileName] = useState(profile?.name || '');
@@ -90,8 +90,8 @@ function App() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-              <WeightEntryForm onAddEntry={addEntry} />
-              <WeightHistoryList entries={entries} onDeleteEntry={deleteEntry} />
+              <GrowthEntryForm onAddEntry={addEntry} />
+              <GrowthHistoryList entries={entries} onDeleteEntry={deleteEntry} />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <GrowthChart entries={entries} profile={profile} />
