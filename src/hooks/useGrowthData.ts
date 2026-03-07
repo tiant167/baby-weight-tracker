@@ -101,12 +101,33 @@ export function useGrowthData() {
     setProfile(newProfile);
   };
 
+  const exportData = () => {
+    const data = {
+      profile,
+      entries,
+      exportDate: new Date().toISOString()
+    };
+    
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `baby-growth-backup-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a);
+    a.click();
+    
+    // Cleanup
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   return {
     entries,
     addEntry,
     updateEntry,
     deleteEntry,
     profile,
-    updateProfile
+    updateProfile,
+    exportData
   };
 }

@@ -7,7 +7,7 @@ import { GrowthChart } from './components/GrowthChart';
 import { ReloadPrompt } from './components/ReloadPrompt';
 
 function App() {
-  const { entries, addEntry, updateEntry, deleteEntry, profile, updateProfile } = useGrowthData();
+  const { entries, addEntry, updateEntry, deleteEntry, profile, updateProfile, exportData } = useGrowthData();
   
   // Profile Form state
   const [profileName, setProfileName] = useState(profile?.name || '');
@@ -27,7 +27,10 @@ function App() {
 
   return (
     <div className="container" style={{ paddingBottom: '4rem' }}>
-      <Header title={profile ? `${profile.name}'s Growth` : 'Baby Growth Tracker'} />
+      <Header 
+        title={profile ? `${profile.name}'s Growth` : 'Baby Growth Tracker'} 
+        onExport={profile ? exportData : undefined}
+      />
 
       {!profile ? (
         <div className="glass-card animate-slide-up" style={{ animationDelay: '0.1s' }}>
