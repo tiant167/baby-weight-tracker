@@ -1,6 +1,6 @@
 # Baby Growth Tracker PWA 👶📈
 
-![App Screenshot](./screenshot.png)
+![App Screenshot](./public/screenshot.png)
 
 A modern, responsive, privacy-focused Progressive Web Application (PWA) to track your baby's weight, height, and head circumference, and visualize their growth against the official World Health Organization (WHO) child growth standards (0-24 months).
 
