@@ -7,16 +7,25 @@ interface SiriSetupModalProps {
 
 export const SiriSetupModal: React.FC<SiriSetupModalProps> = ({ onClose }) => {
   const [copied, setCopied] = React.useState(false);
+  const [activeMetric, setActiveMetric] = React.useState<'weight' | 'height' | 'head'>('weight');
 
   // Dynamically get the exact origin (e.g., https://my-baby-app.vercel.app)
   // so no environment variables or hardcoding is needed.
   const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
-  const actionUrl = `${baseUrl}/?action=add_record&weight=`;
+  const actionUrl = `${baseUrl}/?action=add_record&${activeMetric}=`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(actionUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const getMetricPrompt = () => {
+    switch(activeMetric) {
+      case 'height': return 'Height in cm?';
+      case 'head': return 'Head in cm?';
+      default: return 'Weight in kg?';
+    }
   };
 
   return (
@@ -56,10 +65,36 @@ export const SiriSetupModal: React.FC<SiriSetupModalProps> = ({ onClose }) => {
         </div>
 
         <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginBottom: '1.5rem' }}>
-          Apple strictly restricts auto-installing Shortcuts from websites for security. You will need to create the Shortcut once on your iPhone, but we've made it as simple as copy-and-paste. Your domain is automatically detected below!
+          Apple strictly restricts auto-installing Shortcuts from websites for security. You will need to create the Shortcut once on your iPhone, but we've made it as simple as copy-and-paste.
         </p>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          
+          <div>
+            <h3 style={{ fontSize: '1rem', marginBottom: '0.75rem' }}>Select Metric to Configure</h3>
+            <div style={{ display: 'flex', gap: '0.5rem', background: 'var(--input-bg)', padding: '0.25rem', borderRadius: 'var(--radius-md)' }}>
+              {(['weight', 'height', 'head'] as const).map(metric => (
+                <button
+                  key={metric}
+                  onClick={() => setActiveMetric(metric)}
+                  style={{
+                    flex: 1,
+                    padding: '0.5rem',
+                    border: 'none',
+                    borderRadius: 'var(--radius-sm)',
+                    background: activeMetric === metric ? 'var(--primary-color)' : 'transparent',
+                    color: activeMetric === metric ? '#fff' : 'var(--text-secondary)',
+                    fontSize: '0.875rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  {metric.charAt(0).toUpperCase() + metric.slice(1)}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div>
             <h3 style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>Step 1: Copy your personal URL</h3>
             <div style={{ 
@@ -91,9 +126,9 @@ export const SiriSetupModal: React.FC<SiriSetupModalProps> = ({ onClose }) => {
             <h3 style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>Step 2: Create the Shortcut</h3>
             <ol style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <li>Open the <strong>Shortcuts</strong> app on your iPhone and tap <strong>+</strong>.</li>
-              <li>Name it your voice command (e.g. "Record Baby Weight").</li>
-              <li>Add Action: <strong>"Ask for Input"</strong>. Set type to Number, prompt to "Weight in kg?".</li>
-              <li>Add Action: <strong>"URL"</strong>. Paste the URL you copied above, and place the cursor at the very end. Insert the <strong>Provided Input</strong> magic variable to the end of the URL.</li>
+              <li>Name it your voice command (e.g. "Record Baby {activeMetric.charAt(0).toUpperCase() + activeMetric.slice(1)}").</li>
+              <li>Add Action: <strong>"Ask for Input"</strong>. Set type to Number, prompt to "{getMetricPrompt()}".</li>
+              <li>Add Action: <strong>"URL"</strong>. Paste the URL you copied above, and place the cursor at the very end. Insert the <strong>Provided Input</strong> magic variable.</li>
               <li>Add Action: <strong>"Open URLs"</strong> and select the URL variable.</li>
             </ol>
           </div>
