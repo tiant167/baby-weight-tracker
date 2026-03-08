@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGrowthData } from './hooks/useGrowthData';
 import { Header } from './components/Header';
 import { GrowthEntryForm } from './components/GrowthEntryForm';
@@ -13,6 +13,44 @@ function App() {
   const [profileName, setProfileName] = useState(profile?.name || '');
   const [profileDate, setProfileDate] = useState(profile?.birthDate || '');
   const [profileGender, setProfileGender] = useState<'boy' | 'girl'>(profile?.gender || 'boy');
+
+  // Handle URL Schemes (e.g. from Siri Shortcuts)
+  useEffect(() => {
+    if (!profile) return; // Only process if profile is setup
+
+    const searchParams = new URLSearchParams(window.location.search);
+    const action = searchParams.get('action');
+
+    if (action === 'add_record') {
+      const weightStr = searchParams.get('weight');
+      const heightStr = searchParams.get('height');
+      const headStr = searchParams.get('head');
+
+      const w = weightStr ? parseFloat(weightStr) : undefined;
+      const h = heightStr ? parseFloat(heightStr) : undefined;
+      const hc = headStr ? parseFloat(headStr) : undefined;
+
+      // Only add if at least one valid number is provided
+      if ((w && !isNaN(w)) || (h && !isNaN(h)) || (hc && !isNaN(hc))) {
+        const today = new Date().toISOString().split('T')[0];
+        
+        // Timeout ensures the state has time to settle before adding the entry
+        // Also helps avoid React strict mode double-firing complexities
+        setTimeout(() => {
+          addEntry(
+            today, 
+            (!w || isNaN(w)) ? undefined : w, 
+            (!h || isNaN(h)) ? undefined : h, 
+            (!hc || isNaN(hc)) ? undefined : hc
+          );
+        }, 100);
+      }
+
+      // Clean up the URL so reloads don't trigger it again
+      const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+      window.history.replaceState({ path: newUrl }, '', newUrl);
+    }
+  }, [profile, addEntry]);
 
   const handleProfileSubmit = (e: React.FormEvent) => {
     e.preventDefault();
