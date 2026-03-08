@@ -5,6 +5,7 @@ import { GrowthEntryForm } from './components/GrowthEntryForm';
 import { GrowthHistoryList } from './components/GrowthHistoryList';
 import { GrowthChart } from './components/GrowthChart';
 import { ReloadPrompt } from './components/ReloadPrompt';
+import { SiriSetupModal } from './components/SiriSetupModal';
 
 function App() {
   const { entries, addEntry, updateEntry, deleteEntry, profile, updateProfile, exportData } = useGrowthData();
@@ -13,6 +14,9 @@ function App() {
   const [profileName, setProfileName] = useState(profile?.name || '');
   const [profileDate, setProfileDate] = useState(profile?.birthDate || '');
   const [profileGender, setProfileGender] = useState<'boy' | 'girl'>(profile?.gender || 'boy');
+
+  // Siri Modal State
+  const [isSiriModalOpen, setIsSiriModalOpen] = useState(false);
 
   // Handle URL Schemes (e.g. from Siri Shortcuts)
   useEffect(() => {
@@ -68,6 +72,7 @@ function App() {
       <Header 
         title={profile ? `${profile.name}'s Growth` : 'Baby Growth Tracker'} 
         onExport={profile ? exportData : undefined}
+        onSiriSetup={profile ? () => setIsSiriModalOpen(true) : undefined}
       />
 
       {!profile ? (
@@ -141,6 +146,9 @@ function App() {
           </div>
         </div>
       )}
+
+      {/* Siri Setup Modal */}
+      {isSiriModalOpen && <SiriSetupModal onClose={() => setIsSiriModalOpen(false)} />}
 
       {/* PWA Update Prompt */}
       <ReloadPrompt />
