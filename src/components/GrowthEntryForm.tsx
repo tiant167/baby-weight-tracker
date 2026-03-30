@@ -35,7 +35,11 @@ export const GrowthEntryForm: React.FC<GrowthEntryFormProps> = ({ onAddEntry }) 
   };
 
   return (
-    <form className="glass-card animate-slide-up" onSubmit={handleSubmit} style={{ animationDelay: '0.1s' }}>
+    <form
+      className="glass-card animate-slide-up"
+      onSubmit={handleSubmit}
+      style={{ animationDelay: '0.1s', width: '100%' }}
+    >
       <h2 style={{ fontSize: '1.25rem', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
         <PlusCircle size={20} color="var(--primary-color)" /> Add Measurement
       </h2>

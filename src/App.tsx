@@ -135,12 +135,12 @@ function App() {
         </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+          <div className="dashboard-layout">
+            <div className="dashboard-sidebar">
               <GrowthEntryForm onAddEntry={addEntry} />
               <GrowthHistoryList entries={entries} onUpdateEntry={updateEntry} onDeleteEntry={deleteEntry} />
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div className="dashboard-chart-column">
               <GrowthChart entries={entries} profile={profile} />
             </div>
           </div>

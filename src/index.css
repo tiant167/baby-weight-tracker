@@ -194,9 +194,41 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Layout Utilities */
 .container {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 1rem;
+}
+
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.95fr) minmax(420px, 1.35fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.dashboard-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  min-width: 0;
+}
+
+.dashboard-chart-column {
+  display: flex;
+  min-width: 0;
+}
+
+.growth-chart-card {
+  width: 100%;
+  height: 881px;
+  display: flex;
+  flex-direction: column;
+}
+
+.growth-chart-body {
+  width: 100%;
+  min-height: 0;
+  flex: 1;
 }
 
 .flex-center {
@@ -229,4 +261,115 @@ h1, h2, h3, h4, h5, h6 {
 
 .animate-slide-up {
   animation: slideUpFade var(--transition-normal) forwards;
+}
+
+.history-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding-top: 0.25rem;
+}
+
+.history-pagination-button {
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--text-primary);
+  border-radius: var(--radius-full);
+  padding: 0.55rem 1rem;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.history-pagination-button:hover:not(:disabled) {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.history-pagination-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.history-pagination-status {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  text-align: center;
+  flex: 1;
+  min-width: 120px;
+}
+
+@media (max-width: 960px) {
+  .container {
+    max-width: 800px;
+  }
+
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .growth-chart-card {
+    height: 560px;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    max-width: 100%;
+    padding: 1rem 0.875rem 2rem;
+  }
+
+  .glass-card {
+    padding: 1rem;
+  }
+
+  .dashboard-layout,
+  .dashboard-sidebar {
+    gap: 1rem;
+  }
+
+  .growth-chart-card {
+    height: 420px;
+    padding-bottom: 1rem;
+  }
+
+  .history-card {
+    min-height: auto !important;
+  }
+
+  .history-entry:not(.editing) {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.75rem !important;
+  }
+
+  .history-entry-content {
+    grid-template-columns: 1fr !important;
+    gap: 0.5rem !important;
+  }
+
+  .history-entry-metrics {
+    gap: 0.5rem !important;
+  }
+
+  .history-entry-actions {
+    justify-content: flex-end;
+  }
+
+  .history-pagination {
+    justify-content: center;
+  }
+
+  .history-pagination-button {
+    min-width: 112px;
+  }
+
+  .history-pagination-status {
+    order: -1;
+    width: 100%;
+  }
 }

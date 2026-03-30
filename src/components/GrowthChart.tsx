@@ -108,7 +108,13 @@ export const GrowthChart: React.FC<GrowthChartProps> = ({ entries, profile }) =>
   };
 
   return (
-    <div className="glass-card animate-slide-up" style={{ animationDelay: '0.2s', paddingBottom: '2.5rem', display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <div
+      className="glass-card animate-slide-up growth-chart-card"
+      style={{
+        animationDelay: '0.2s',
+        paddingBottom: '2.5rem'
+      }}
+    >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
         <h2 style={{ fontSize: '1.25rem', margin: 0 }}>Growth Curve (0-24m)</h2>
         
@@ -147,7 +153,7 @@ export const GrowthChart: React.FC<GrowthChartProps> = ({ entries, profile }) =>
         </div>
       </div>
 
-      <div style={{ width: '100%', minHeight: 400, flex: 1 }}>
+      <div className="growth-chart-body" style={{ width: '100%' }}>
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={chartData}
